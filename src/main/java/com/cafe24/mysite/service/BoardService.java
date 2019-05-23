@@ -23,4 +23,24 @@ public class BoardService {
 		return boardDao.getList();
 	}
 
+	public BoardVo view(int no) {
+		return boardDao.get(no);
+	}
+
+
+	public void update(BoardVo boardVo) {
+		  boardDao.update(boardVo);
+	}
+
+
+	public void writeReplyContent(BoardVo vo) {
+		boardDao.insertReply(vo);
+	}
+
+
+	public void delete(BoardVo vo) {
+		boardDao.delete(vo);
+		
+	}
+
 }

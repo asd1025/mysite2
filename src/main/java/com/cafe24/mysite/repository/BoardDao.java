@@ -28,4 +28,21 @@ public class BoardDao {
 		return list;
 	}
 
+	public BoardVo get(int no) {
+		return sqlSession.selectOne("board.getbyNo",no);
+	}
+
+	public void update(BoardVo boardVo) {
+		sqlSession.update("board.update",boardVo);
+	}
+
+	public void insertReply(BoardVo vo) {
+		sqlSession.update("board.updateOrderNo",vo);
+		sqlSession.insert("board.insertReply",vo);
+	}
+
+	public void delete(BoardVo vo) {
+		sqlSession.delete("board.delete",vo);
+	}
+
 }

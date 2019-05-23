@@ -13,7 +13,7 @@
 <link href="${pageContext.servletContext.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript">
-console.log('${sessionScope.authUser.no}');
+<!--console.log('${sessionScope.authUser.no}'); -->
 
 </script>
 </head>
@@ -25,6 +25,10 @@ console.log('${sessionScope.authUser.no}');
 				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board/write">
 					<input type = "hidden" name = "user_no" value="${sessionScope.authUser.no}">
 					<input type = "hidden" name = "name" value="${sessionScope.authUser.name}">
+					<input type = "hidden" name = "no" value="${vo.no}">
+					<input type = "hidden" name = "group_no" value="${vo.group_no}">
+					<input type = "hidden" name = "order_no" value="${vo.order_no}">
+					<input type = "hidden" name = "depth" value="${vo.depth}">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>

@@ -9,7 +9,10 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
+	
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy />
+	
 	<!--1. validator, conversionService, messageConverter 등 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
@@ -31,12 +34,21 @@
 			</bean>
 
 		</mvc:message-converters>
+		
+		<!-- Argument Resolvers -->
+		<mvc:argument-resolvers>
+			<bean class="com.cafe24.security.AuthUserHandlerMethodArgumentResolver"/>
+		</mvc:argument-resolvers>
+		
+		
+		
 	</mvc:annotation-driven>
 
-	<!--2. 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
+	<!-- . 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
-
-	<!--3. viewResolver 설정 -->
+	
+	
+	<!-- . viewResolver 설정 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -52,6 +64,46 @@
 	<!-- Controller Scanning 하는 base package 지정 -->
 	<context:component-scan
 		base-package="com.cafe24.mysite.controller,com.cafe24.mysite.exception" />
+
+	<!--  . MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Interceptors -->
+	<!-- 
+    <mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/guestbook/**" /> 
+    	<bean class="com.cafe24.mysite.interceptor.MyInterceptor02" />
+        </mvc:interceptor>
+    </mvc:interceptors> -->
+ 	 <mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/user/auth" /> 
+    	<bean class="com.cafe24.security.AuthLoginInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+ 	 <mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/user/logout" /> 
+    	<bean class="com.cafe24.security.AuthLogoutInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+ 	 <mvc:interceptors>
+        <mvc:interceptor>
+        	<mvc:mapping path="/**" /> 
+        	<mvc:exclude-mapping path="/user/auth"/>
+        	<mvc:exclude-mapping path="/user/logout"/>
+        	<mvc:exclude-mapping path="/assets/**"/>
+    	<bean class="com.cafe24.security.AuthInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
 
 
