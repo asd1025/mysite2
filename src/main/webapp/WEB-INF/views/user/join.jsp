@@ -67,63 +67,50 @@ $(function(){
 		<div id="content">
 			<div id="user">
 
-				<form id="join-form" name="joinForm" method="post"
+				<form:form  modelAttribute="userVo"  id="join-form" name="joinForm" method="post"
 					action="${pageContext.servletContext.contextPath}/user/join">
-					<input type="hidden" name="a" value="join"> <label
-						class="block-label" for="name">이름</label> <input id="name"
-						name="name" type="text" value="">
+					<label class="block-label" for="name">이름</label>
+					<input id="name" name="name" type="text" value="">
 
 					<spring:hasBindErrors name="userVo">
-						<c:if test="${errors.hasFieldErrors('name') }">
-							<strong style="font-weight:bold; color: red; text-align: left; padding:0;"> 
-							<spring:message
-									code="${errors.getFieldError( 'name' ).codes[0] }"
-									text="${errors.getFieldError( 'name' ).defaultMessage }" />
-							</strong>
-						</c:if>
+					    <c:if test="${errors.hasFieldErrors('name') }">
+							<p style="font-weight:bold; color:red; text-align:left; padding:0">
+					            <spring:message 
+						     		code="${errors.getFieldError( 'name' ).codes[0] }" 				     
+						     		text="${errors.getFieldError( 'name' ).defaultMessage }" />
+					        </p> 
+					   </c:if>
 					</spring:hasBindErrors>
 
 
-					<label class="block-label" for="email">이메일</label> <%-- <input
-						id="email" name="email" type="text" value="">
-					<spring:hasBindErrors name="userVo">
-						<c:if test="${errors.hasFieldErrors('email') }">
-							<strong style="font-weight:bold; color: red; text-align: left; padding:0;"> 
-							<spring:message
-									code="${errors.getFieldError( 'email' ).codes[0] }"
-									text="${errors.getFieldError( 'email' ).defaultMessage }" />
-							</strong>
-						</c:if>
-					</spring:hasBindErrors> --%>
+					<label class="block-label" for="email">이메일</label> 
+					
 					<form:input path="email"/>
-					<input type="button" value=" 체크" id="check-button"> <img
-						src="${pageContext.servletContext.contextPath}/assets/images/check.png"
+					<input type="button" value=" 체크" id="check-button"> 
+					<img src="${pageContext.servletContext.contextPath}/assets/images/check.png"
 						style="display: none; width: 10%" height="10%" id="check-image">
-						
-						<p style="font-weight: bold; text-align:left; padding:0; color:f00; ">
+					<p style="font-weight:bold; color:#f00; text-align:left; padding:0; margin:0 ">
 							<form:errors path="email"/>	
 						</p>
 						
-					<label class="block-label">패스워드</label> <input name="password"
-						type="password" value="">
-	<form:password path="password"/>
+					<label class="block-label">패스워드</label>
+					 <form:password path="password"/>
 					<fieldset>
 						<legend>성별</legend>
 						<label>여</label> <form:radiobutton path="gender" checked="checked" value="female"/> 
 						<label>남</label> <form:radiobutton path="gender"   value="male"/> 
-							name="gender" value="male">
 					</fieldset>
 
 					<fieldset>
 						<legend>약관동의</legend>
-						<form:checkbox path="agreeProv" value='y'/>
+						<%-- <form:checkbox path="agreeProv" value='y'/> --%>
 						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 						<label>서비스 약관에 동의합니다.</label>
 					</fieldset>
 
 					<input type="submit" value="가입하기">
 
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">

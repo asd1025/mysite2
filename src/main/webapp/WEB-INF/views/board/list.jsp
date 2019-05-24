@@ -16,18 +16,13 @@
 <script
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
- function write_button(){
- 	var authUser=' ${sessionScope.authUser}' ;
- 	console.log(authUser+' ......');
-	if(authUser==null){
-		 alert('로그인 후 사용하세요!');
-		 return false;
-	 }
-  }
- $(function () {
-	
-});
-
+	function write_button() {
+		var authUser = ' ${sessionScope.authUser}';
+		if (authUser == null) {
+			alert('로그인 후 사용하세요!');
+			return false;
+		}
+	}
 </script>
 </head>
 <body>
@@ -50,28 +45,40 @@
 					</tr>
 
 					<c:forEach items="${list}" var='vo' varStatus="status">
+						<c:choose>
+									<c:when test="${vo.reg_date  ne '0000-00-00 00:00:00' }">
 						<tr>
 							<td>${vo.no }</td>
 							<td style="text-align: left; padding-left:  ${vo.depth*10}px;">
-							<c:if test="${vo.depth > 0 }">
-							<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png"> 
-							</c:if>
-								<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}">${vo.title }</a>
+								<c:if test="${vo.depth > 0 }">
+									<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png">
+								</c:if> 
+										<a href="${pageContext.servletContext.contextPath}/board/view?no=${vo.no}">${vo.title }</a>
 							</td>
 							<td>${vo.name}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.reg_date }</td>
 
 							<td><c:choose>
-									<c:when
-										test="${ (!empty sessionScope.authUser) && (vo.user_no eq sessionScope.authUser.no) }"> 
-							<a href="${pageContext.servletContext.contextPath}/board/delete?no=${vo.no}&group_no=${group_no}&order_no=${order_no}" class="del" id="del_button">삭제</a>
+									<c:when test="${ (!empty sessionScope.authUser) && (vo.user_no eq sessionScope.authUser.no) }">
+										<a
+											href="${pageContext.servletContext.contextPath}/board/delete?no=${vo.no}"
+											class="del" id="del_button">삭제</a>
 									</c:when>
 								</c:choose></td>
 						</tr>
+						</c:when>
+						<c:otherwise>
+						<tr>
+						<td>${vo.no }</td>
+						<td style="text-align: left; padding-left:  0px;">  삭제된 글입니다. </td>
+						<td/><td/><td/><td/>
+						</tr>
+						</c:otherwise>
+						</c:choose>
 					</c:forEach>
 
-				 
+
 				</table>
 				<!-- pager 추가 -->
 				<div class="pager">

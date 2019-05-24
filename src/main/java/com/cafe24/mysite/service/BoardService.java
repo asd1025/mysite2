@@ -28,8 +28,8 @@ public class BoardService {
 	}
 
 
-	public void update(BoardVo boardVo) {
-		  boardDao.update(boardVo);
+	public void update(BoardVo vo) {
+		  boardDao.update(vo);
 	}
 
 
@@ -39,6 +39,7 @@ public class BoardService {
 
 
 	public void delete(BoardVo vo) {
+		//삭제 처리 
 		boardDao.delete(vo);
 		
 	}

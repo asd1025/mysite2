@@ -47,7 +47,8 @@ public class BoardController {
 		return "board/view";
 	}
 	@RequestMapping("/delete")
-	public String delete(@RequestParam BoardVo boardVo ) {
+	public String delete(@ModelAttribute BoardVo boardVo ) {
+		System.out.println(boardVo+" .............");
 		boardService.delete(boardVo);
 		return "redirect:/board";
 	}
@@ -56,7 +57,7 @@ public class BoardController {
 	// 권한은 접근 권한
 	@Auth(role=Role.USER)
 	@RequestMapping("/write")
-	public String write(HttpSession session,@ModelAttribute BoardVo boardVo,Model model) {
+	public String write(@ModelAttribute BoardVo boardVo,Model model) {
 //		UserVo authUser= (UserVo) session.getAttribute("authUser");
 //		if(authUser==null|| boardVo==null) {
 //			return "redirect:/board";

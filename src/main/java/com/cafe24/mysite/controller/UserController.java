@@ -14,7 +14,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.mysite.service.UserService;
 import com.cafe24.mysite.vo.UserVo;
@@ -41,6 +40,9 @@ public class UserController {
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo userVo
 			,BindingResult result, Model model) {
+		// 에러 출력
+		//BindingResult 는  validation 후, 유효하지 못한 값이 존재 할때 Error(BindingResult)에 
+		// 그 내용을 담아서 jsp 등 view Engine 으로 오류내용을 MessageSource로 국제화하여 보여주게 지원하고 있다
 		if(result.hasErrors()) {
 			List<ObjectError> list=result.getAllErrors() ;
 			for(ObjectError error:list) {
@@ -74,17 +76,17 @@ public class UserController {
 //			return "user/login";
 //		}
 //		
-//		// session 처리
+//		 //session 처리
 //		session.setAttribute("authUser", authUser);
 //		return "redirect:/";
 //	}
 
-//	@RequestMapping(value = "/logout")
-//	public String logout(HttpSession session) {
-//		session.removeAttribute("authUser");
-//		session.invalidate();
-//		return "redirect:/";
-//	}
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)

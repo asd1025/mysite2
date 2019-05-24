@@ -21,8 +21,7 @@ private String password;
 private String gender;
 private String joinDate;
 
-private boolean agreeProv;
-public UserVo() {
+ public UserVo() {
 }
 public UserVo(String email, String password) {
 	this.email = email;

@@ -39,7 +39,9 @@ update board  set order_no=order_no+1 where order_no >= #{order_no}+1
 		0,now(), #{group_no} ,#{order_no}+1,#{depth}+1,#{user_no})
 	]]> 
 </insert> 
-<delete id="delete" parameterType="boardvo">
-delete from board where no=#{no};
-</delete>
+<update id="deleteUpdate" parameterType="boardvo">
+  <![CDATA[	
+update board set reg_date= '0000-00-00 00:00:00' where no=#{no}
+	]]> 
+</update>
 </mapper>
