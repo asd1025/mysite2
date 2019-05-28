@@ -23,6 +23,9 @@
 			return false;
 		}
 	}
+	
+	console.log('${paging}');
+	
 </script>
 </head>
 <body>
@@ -83,13 +86,41 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
+					<li>
+					<c:if test="${paging.prevGroupNo>=1 }">
+					<a href="${pageContext.servletContext.contextPath}/board?
+					prevGroupNo=${paging.prevGroupNo-1}">◀</a>
+					</c:if>
+					</li>
+					
+					<c:forEach begin='1' end='${paging.groupCount}' var='i' >
+					<li>
+					<c:choose>
+					<c:when test="${paging.startPageGroupNo+i<=paging.allPageCount }">
+					<a href="${pageContext.servletContext.contextPath}/board?
+					pageNo=${paging.startPageGroupNo+i}
+					&prevGroupNo=${paging.prevGroupNo}">
+					${paging.startPageGroupNo+i}</a>
+					</c:when>
+					<c:otherwise>
+					${paging.startPageGroupNo+i}
+					</c:otherwise>
+					</c:choose>
+					</li>
+						</c:forEach>
+						
+						<li>
+						<c:if test="${paging.prevGroupNo+1<paging.allGroupCount }">
+						<a href="${pageContext.servletContext.contextPath}/board?
+					prevGroupNo=${paging.prevGroupNo+1}">▶</a>
+					</c:if></li>
+						<!-- <li><a href="">◀</a></li>
 						<li><a href="">1</a></li>
 						<li class="selected">2</li>
 						<li><a href="">3</a></li>
 						<li>4</li>
 						<li>5</li>
-						<li><a href="">▶</a></li>
+						<li><a href="">▶</a></li> -->
 					</ul>
 				</div>
 				<!-- pager 추가 -->

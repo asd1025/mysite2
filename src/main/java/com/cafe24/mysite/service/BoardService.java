@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.mysite.dto.Paging;
 import com.cafe24.mysite.repository.BoardDao;
 import com.cafe24.mysite.vo.BoardVo;
 import com.cafe24.mysite.vo.GuestbookVo;
@@ -13,14 +14,28 @@ import com.cafe24.mysite.vo.GuestbookVo;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
+	private Paging paging;
+	
 	
 	public void writeContent(BoardVo vo) {
 		boardDao.insert(vo);
 	}
- 
+	 
+	
+	public Paging getPaging() {
+		return paging;
+	}
+	public Paging initialPaging() {
+		return new Paging(boardDao.getTotalCount());
+	}
+	
 
-	public List<BoardVo> getList() {
-		return boardDao.getList();
+	public List<BoardVo> getList(Paging page,String kwd) {
+		 paging=initialPaging();
+		 paging.setPrevGroupNo(page.getPrevGroupNo());
+		 paging.setPageNo(page.getPageNo());
+			System.out.println(paging);
+  		return boardDao.getList(paging);
 	}
 
 	public BoardVo view(int no) {

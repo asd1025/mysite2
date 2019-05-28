@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.mysite.dto.Paging;
 import com.cafe24.mysite.service.BoardService;
 import com.cafe24.mysite.vo.BoardVo;
 import com.cafe24.mysite.vo.UserVo;
@@ -19,8 +20,7 @@ import com.cafe24.security.Auth.Role;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
-
+//	private Paging paging;
 	@Autowired
 	private BoardService boardService;
 	
@@ -48,7 +48,6 @@ public class BoardController {
 	}
 	@RequestMapping("/delete")
 	public String delete(@ModelAttribute BoardVo boardVo ) {
-		System.out.println(boardVo+" .............");
 		boardService.delete(boardVo);
 		return "redirect:/board";
 	}
@@ -79,8 +78,10 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	@RequestMapping("")
-	public String  getList(Model model) {
-		model.addAttribute("list",boardService.getList());
+	public String  getList(Model model,@ModelAttribute Paging paging
+			,@RequestParam(value="kwd", defaultValue="")String kwd) {
+		model.addAttribute("list",boardService.getList(paging,kwd));
+ 		model.addAttribute("paging",boardService.getPaging());
 		return "/board/list";
 	}
 	

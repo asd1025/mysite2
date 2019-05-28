@@ -8,14 +8,20 @@
 		0,now(), (select ifnull(max(group_no),0)+1 from board b) ,1,0,#{user_no})
 	]]> 
 </insert> 
-<select id="getList" resultType="boardvo">
+<select id="getList" resultType="boardvo"  parameterType="paging">
 select b.no,b.title,b.contents,b.hit,b.reg_date,b.group_no,b.order_no,b.depth,
 u.name,b.user_no from user u, board b where u.no=b.user_no order by group_no desc, order_no asc
+ limit #{startPageNo} ,#{contentsCount}
 </select>
 
 <select id="getbyNo" resultType="boardvo" parameterType="integer">
 	<![CDATA[
 	select * from board where no=#{no}
+		]]> 
+</select>
+<select id="getTotalCount" resultType="int"  >
+	<![CDATA[
+	select count(*) from board
 		]]> 
 </select>
 
