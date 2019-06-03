@@ -13,20 +13,20 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import com.cafe24.mysite.vo.UserVo;
 
 public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
-
-
+	// 여기에서는 세션 관리를 할 거야  
 	@Override
 	public Object resolveArgument(MethodParameter parameter, 
 			ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, 
 			WebDataBinderFactory binderFactory) throws Exception {
 		
-		
+		// 파라미터에 @AuthUser가 붙어있고 타입이 UserVo 인지 확인
 		// 내가 지원하는 애가 아니야 다른 애로 셋팅해줘
 		if(supportsParameter(parameter)==false) {
 			return WebArgumentResolver.UNRESOLVED; 
 		}
 		
+		// @며스유저 붙었고 타입도 유저브이오 임!
 		HttpServletRequest request= webRequest.getNativeRequest(HttpServletRequest.class);
 		HttpSession session= request.getSession();
 		if(session==null) {

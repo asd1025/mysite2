@@ -40,6 +40,7 @@ public class AuthInterceptor  extends HandlerInterceptorAdapter{
 		//		}
 		
 		//5. @Auth가 안붙어 있는 경우 ..method에도 class에도 없는
+		// 인증이 필요없는 요청  
 		if(auth==null) {return true;}
 		
 		//6. @Auth가 class 또는 method에 붙어 있기 때문에 

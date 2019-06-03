@@ -40,6 +40,8 @@ public class UserController {
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo userVo
 			,BindingResult result, Model model) {
+		
+		
 		// 에러 출력
 		//BindingResult 는  validation 후, 유효하지 못한 값이 존재 할때 Error(BindingResult)에 
 		// 그 내용을 담아서 jsp 등 view Engine 으로 오류내용을 MessageSource로 국제화하여 보여주게 지원하고 있다

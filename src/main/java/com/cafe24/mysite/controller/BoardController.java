@@ -47,7 +47,7 @@ public class BoardController {
 		return "board/view";
 	}
 	@RequestMapping("/delete")
-	public String delete(@ModelAttribute BoardVo boardVo ) {
+	public String delete(@ModelAttribute BoardVo boardVo) {
 		boardService.delete(boardVo);
 		return "redirect:/board";
 	}
